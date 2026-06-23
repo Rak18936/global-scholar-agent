@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Scholar Agent - Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="app-container">
+        
+        <!-- HEADER -->
+        <header class="main-header glass-card">
+            <div class="header-brand">
+                <div class="pulse-icon"></div>
+                <h1>Global Scholar Agent Portal</h1>
+                <span class="badge track-badge">Agents for Good Track</span>
+            </div>
+            <div class="target-countries-list">
+                <span class="country-pill">🇰🇷 S. Korea</span>
+                <span class="country-pill">🇯🇵 Japan</span>
+                <span class="country-pill">🇩🇪 Germany</span>
+                <span class="country-pill">🇸🇬 Singapore</span>
+                <span class="country-pill">🇹🇼 Taiwan</span>
+            </div>
+        </header>
+
+        <!-- STATS / METRICS PANELS -->
+        <section class="metrics-grid">
+            <div class="metric-card glass-card purple-gradient">
+                <div class="metric-info">
+                    <h3>Fully-Funded Scholarships</h3>
+                    <p class="metric-val" id="val-scholarships">0</p>
+                </div>
+                <div class="metric-icon">🎓</div>
+            </div>
+            <div class="metric-card glass-card blue-gradient">
+                <div class="metric-info">
+                    <h3>Top Partner Universities</h3>
+                    <p class="metric-val" id="val-unis">0</p>
+                </div>
+                <div class="metric-icon">🏛️</div>
+            </div>
+            <div class="metric-card glass-card green-gradient">
+                <div class="metric-info">
+                    <h3>Est. Total Support Value</h3>
+                    <p class="metric-val" id="val-usd">$150K+</p>
+                </div>
+                <div class="metric-icon">💵</div>
+            </div>
+            <div class="metric-card glass-card orange-gradient">
+                <div class="metric-info">
+                    <h3>Average Acceptance rate</h3>
+                    <p class="metric-val" id="val-rate">12.5%</p>
+                </div>
+                <div class="metric-icon">📈</div>
+            </div>
+        </section>
+
+        <!-- MAIN LAYOUT GRID -->
+        <main class="dashboard-layout">
+            
+            <!-- LEFT COLUMN: PROFILE INPUT -->
+            <div class="left-section">
+                <div class="glass-card form-card">
+                    <div class="card-header">
+                        <h2>Academic Candidate Profile</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- ScholarAgent Introduction Roadmap Checklist -->
+                        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 12px; padding: 1.1rem; margin-bottom: 1.25rem;">
+                            <h3 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--accent-blue); margin-bottom: 0.25rem;">🎓 ScholarAgent</h3>
+                            <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem;">Upload your resume and let AI build your personalized study-abroad roadmap.</p>
+                            <ul style="list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; font-size: 0.75rem; color: var(--text-muted); padding-left: 0;">
+                                <li>✓ Analyze Academic Profile</li>
+                                <li>✓ Find Best-Fit Universities</li>
+                                <li>✓ Match Scholarships</li>
+                                <li>✓ Check Eligibility</li>
+                                <li>✓ Estimate Competitiveness</li>
+                                <li>✓ Generate Application Timeline</li>
+                            </ul>
+                        </div>
+                        <div class="form-row-double">
+                            <div class="form-group">
+                                <label for="prof-degree">Desired Degree</label>
+                                <select id="prof-degree">
+                                    <option value="Master's">Master's Degree</option>
+                                    <option value="PhD">PhD / Doctorate</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-country-mode">Country Selection Mode</label>
+                                <select id="prof-country-mode">
+                                    <option value="auto">Auto Recommend (Evaluate All)</option>
+                                    <option value="single">Single Country Deep Analysis</option>
+                                    <option value="multiple">Multiple Countries</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Country Selectors -->
+                        <div class="form-group" id="group-single-country" style="display: none; background: rgba(255, 255, 255, 0.02); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.04);">
+                            <label for="prof-single-country">Select Target Country</label>
+                            <select id="prof-single-country">
+                                <option value="South Korea">South Korea</option>
+                                <option value="Japan">Japan</option>
+                                <option value="Germany">Germany</option>
+                                <option value="Singapore">Singapore</option>
+                                <option value="Taiwan">Taiwan</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="group-multiple-countries" style="display: none; background: rgba(255, 255, 255, 0.02); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.04);">
+                            <label style="margin-bottom: 0.4rem; display: block;">Select Target Countries</label>
+                            <div class="checkbox-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; cursor: pointer;">
+                                    <input type="checkbox" name="multi-country" value="South Korea" checked> South Korea
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; cursor: pointer;">
+                                    <input type="checkbox" name="multi-country" value="Japan" checked> Japan
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; cursor: pointer;">
+                                    <input type="checkbox" name="multi-country" value="Germany" checked> Germany
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; cursor: pointer;">
+                                    <input type="checkbox" name="multi-country" value="Singapore" checked> Singapore
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; cursor: pointer;">
+                                    <input type="checkbox" name="multi-country" value="Taiwan" checked> Taiwan
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Expandable Advanced Settings (Overrides) -->
+                        <details style="margin-bottom: 1.25rem; background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.03); border-radius: 8px; padding: 0.5rem 0.75rem;">
+                            <summary style="font-size: 0.8rem; font-weight: 500; color: var(--accent-blue); cursor: pointer; user-select: none;">
+                                Advanced Settings & Overrides
+                            </summary>
+                            <div style="margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div class="form-row-double">
+                                    <div class="form-group">
+                                        <label for="prof-gpa">Academic GPA / CGPA</label>
+                                        <div style="display: flex; gap: 0.5rem;">
+                                            <input type="number" id="prof-gpa" min="0.0" max="100.0" step="0.01" value="3.5" style="flex: 1;" placeholder="Score">
+                                            <select id="prof-gpa-scale" style="width: 80px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; color: var(--text-main);">
+                                                <option value="4.0">/ 4.0</option>
+                                                <option value="10.0">/ 10.0</option>
+                                                <option value="100">%</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="prof-lang-type">Language Test Type</label>
+                                        <select id="prof-lang-type">
+                                            <option value="IELTS">IELTS</option>
+                                            <option value="TOEFL">TOEFL</option>
+                                            <option value="Native">Native Exam (TOPIK/JLPT/TestDaF)</option>
+                                            <option value="Exempt">Exempt (English Medium/Native)</option>
+                                            <option value="None" selected>None / Not Taken</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-row-double">
+                                    <div class="form-group" id="group-lang-score" style="opacity: 0.3;">
+                                        <label for="prof-ielts" id="lbl-lang-score">No Language Test Taken</label>
+                                        <input type="number" id="prof-ielts" min="0.0" max="9.0" step="0.5" value="0.0" placeholder="e.g. 7.0" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="prof-major">Desired Field (Major)</label>
+                                        <select id="prof-major">
+                                            <option value="Engineering">Engineering</option>
+                                            <option value="Science">Science (Physics/Bio/Chem)</option>
+                                            <option value="Business">Business / Economics</option>
+                                            <option value="Humanities">Humanities / Arts</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="prof-pub-status">Research / Publications</label>
+                                    <select id="prof-pub-status">
+                                        <option value="None">No Publications Yet</option>
+                                        <option value="Published">Has Scientific Publications</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </details>
+
+                        <div class="form-group">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                                <label for="prof-resume">Paste Resume / CV Abstract</label>
+                                <div>
+                                    <input type="file" id="resume-file" accept=".pdf,.txt,.md" style="display: none;">
+                                    <button type="button" class="btn btn-sm" id="btn-upload-resume" style="padding: 4px 8px; font-size: 0.72rem;">📁 Upload Resume (.pdf/.txt/.md)</button>
+                                </div>
+                            </div>
+                            <textarea id="prof-resume" rows="4" placeholder="Paste your academic history, projects, and work experience here, or upload a .pdf/.txt/.md file to auto-parse..."></textarea>
+                        </div>
+
+                        <button class="btn btn-primary btn-block" id="btn-run-match">Analyze Profile & Match Programs</button>
+                    </div>
+                </div>
+
+                <!-- DYNAMIC RESULTS MATCHES -->
+                <div class="glass-card matches-card">
+                    <div class="card-header">
+                        <h2>Compatible Scholarship Matches</h2>
+                    </div>
+                    <div class="matches-list" id="matches-list">
+                        <p class="empty-state">Enter academic details and click Match to display fully funded programs.</p>
+                    </div>
+                </div>
+
+                <!-- DYNAMIC UNIVERSITY MATCHES -->
+                <div class="glass-card unis-card">
+                    <div class="card-header">
+                        <h2>Matched University Programs</h2>
+                    </div>
+                    <div class="unis-list" id="unis-list">
+                        <p class="empty-state">Matched universities will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: AGENT CONSOLE & DOCUMENTATION -->
+            <div class="right-section">
+                <!-- INTERACTIVE AGENT CHAT -->
+                <div class="glass-card chat-card">
+                    <div class="card-header chat-header">
+                        <div class="header-agent-info">
+                            <span class="agent-avatar">🎓</span>
+                            <div>
+                                <h2>ScholarAgent Progress</h2>
+                            </div>
+                        </div>
+                        <div class="security-lock-badge">
+                            <span>🛡️ validated MCP Mode</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-terminal" id="chat-terminal">
+                        <div class="terminal-intro">
+                            <p class="intro-greeting" style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 0.4rem;">🎓 ScholarAgent</p>
+                            <p class="intro-hint" style="font-size: 0.85rem; color: var(--text-main); margin-bottom: 1rem;">Upload your resume and receive personalized university and scholarship recommendations.</p>
+                            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.25rem; padding-left: 0;">
+                                <li>✓ Discover universities that match your academic profile</li>
+                                <li>✓ Find scholarships aligned with your qualifications</li>
+                                <li>✓ Compare opportunities across South Korea, Japan, Germany, Singapore, and Taiwan</li>
+                                <li>✓ Understand admission competitiveness</li>
+                                <li>✓ Review application requirements and deadlines</li>
+                                <li>✓ Receive a step-by-step study-abroad roadmap</li>
+                            </ul>
+                            <p style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; color: var(--accent-blue); margin-bottom: 0.4rem;">Or Ask Questions Directly:</p>
+                            <ul class="example-prompts">
+                                <li><code>"Does GKS South Korea cover flights?"</code></li>
+                                <li><code>"Suggest universities in Germany for Engineering."</code></li>
+                            </ul>
+                        </div>
+                        <div class="chat-messages" id="chat-messages"></div>
+                        <div class="agent-thinking-area" id="agent-thinking-area" style="display: none;">
+                            <div class="thinking-spinner"></div>
+                            <span class="thinking-label">Coordinator researching databases...</span>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" id="chat-input" placeholder="Ask questions about stipends, eligibility, or countries..." autocomplete="off">
+                        <button class="btn btn-primary" id="btn-send-chat">Ask Portal</button>
+                    </div>
+                </div>
+
+                <!-- SOP TEMPLATE SECTION -->
+                <div class="glass-card sop-card">
+                    <div class="card-header">
+                        <h2>Statement of Purpose (SOP) Assistant</h2>
+                    </div>
+                    <div class="sop-editor-body">
+                        <p class="empty-state" id="sop-empty-state">Select a matched scholarship program on the left to generate a tailored Statement of Purpose (SOP) outline.</p>
+                        <pre class="sop-output" id="sop-output" style="display: none;"></pre>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

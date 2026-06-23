@@ -1,0 +1,12 @@
+{
+  "skill": "global-scholar-agent",
+  "version": "1.0.0",
+  "author": "Kaggle Capstone Participant",
+  "entrypoint": "src/app.py",
+  "port": 5000,
+  "capabilities": {
+    "local_file_access": true,
+    "network_access": false,
+    "sandboxed_execution": true
+  }
+}
