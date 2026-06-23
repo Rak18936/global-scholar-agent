@@ -1,6 +1,6 @@
 # Global Scholar Agent 🧠🌍
 
-**A Multi-Agent Academic Portal Recommending Fully-Funded Scholarships & Universities in South Korea, Japan, Germany, Singapore, and Taiwan.**
+**A Multi-Agent Academic Portal Recommending Fully-Funded Scholarships & Universities in  Japan, Germany, Singapore, and Taiwan,South Korea.**
 
 Global Scholar Agent is a secure, interactive, and deployable AI assistant built for the Kaggle Capstone Project. It helps students find fully-funded scholarships and top university programs matching their resumes, runs compatibility audits, highlights profile gaps, and generates custom Statement of Purpose (SOP) structures.
 
